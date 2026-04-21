@@ -1,0 +1,15 @@
+{
+  "companyName": "CATTY CAR RENTAL PHUKET",
+  "companyEmail": "support@cattycar.co.th",
+  "companyPhone": "+66-82-123-4567",
+  "companyAddress": "123 Patong Rd, Patong Beach, Phuket 83150",
+  "timezone": "Asia/Bangkok",
+  "logo": "/uploads/logos/logo_1713619200.png",
+  "smtpServer": "smtp.gmail.com",
+  "smtpPort": "587",
+  "senderEmail": "noreply@cattycar.co.th",
+  "senderPassword": "••••••••",
+  "apiKey": "sk_prod_4a9c8b2f3d1e5f7g9h2j4k6m8n",
+  "enabledPayments": true,
+  "enabledBooking": true
+}
