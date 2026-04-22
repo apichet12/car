@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
-import Navbar from './Navbar'
+import MobileHeader from './MobileHeader'
+import BottomNavigation from './BottomNavigation'
 
 interface NavbarWrapperProps {
   user?: { name: string; role: string } | null
@@ -24,5 +25,10 @@ export default function NavbarWrapper({ user }: NavbarWrapperProps) {
     fetchLogo()
   }, [])
 
-  return <Navbar user={user} logoUrl={logoUrl || undefined} />
+  return (
+    <>
+      <MobileHeader logoUrl={logoUrl || undefined} />
+      <BottomNavigation user={user} />
+    </>
+  )
 }
