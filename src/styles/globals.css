@@ -421,16 +421,208 @@
 .font-playfair { font-family: 'Playfair Display', serif; }
 .font-kanit { font-family: 'Kanit', sans-serif; }
 
+/* ====== APP-LIKE BEAUTIFUL STYLING ====== */
+
+/* Beautiful button hover effects */
+.btn-primary, .btn-gold, .btn-teal, .btn-secondary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before, .btn-gold::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:active::before, .btn-gold:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-teal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-teal:hover::after {
+  left: 100%;
+}
+
+/* Beautiful card styles for mobile */
+.card-mobile {
+  background: linear-gradient(135deg, rgba(22,22,42,0.8), rgba(28,28,46,0.6));
+  border: 1px solid rgba(212,175,55,0.1);
+  border-radius: 16px;
+  padding: 16px;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(10px);
+}
+
+.card-mobile:active {
+  border-color: rgba(212,175,55,0.3);
+  background: linear-gradient(135deg, rgba(22,22,42,0.9), rgba(28,28,46,0.7));
+  transform: scale(0.98);
+}
+
+/* Section spacing - no stacking */
+.section-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+/* Beautiful divider */
+.divider-app {
+  height: 0.5px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212,175,55,0.2) 50%, transparent 100%);
+  margin: 16px 0;
+}
+
+/* App-like list items */
+.list-item-app {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.04);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.list-item-app:active {
+  background: rgba(212,175,55,0.08);
+  border-color: rgba(212,175,55,0.15);
+  transform: translateY(-1px);
+}
+
+/* Beautiful form inputs */
+.form-group-app {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.form-group-app label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group-app input,
+.form-group-app select,
+.form-group-app textarea {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  padding: 12px;
+  border-radius: 10px;
+  font-family: 'Kanit', sans-serif;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.form-group-app input:focus,
+.form-group-app select:focus,
+.form-group-app textarea:focus {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(212,175,55,0.3);
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.08);
+  outline: none;
+}
+
+/* Beautiful status indicators */
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.status-indicator.active {
+  background: rgba(16,185,129,0.15);
+  border: 1px solid rgba(16,185,129,0.3);
+  color: #34D399;
+}
+
+.status-indicator.inactive {
+  background: rgba(239,68,68,0.15);
+  border: 1px solid rgba(239,68,68,0.3);
+  color: #F87171;
+}
+
+/* Beautiful icon buttons */
+.icon-btn-app {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border: none;
+  background: rgba(255,255,255,0.05);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: rgba(255,255,255,0.6);
+}
+
+.icon-btn-app:active {
+  background: rgba(212,175,55,0.15);
+  color: #D4AF37;
+  transform: scale(0.95);
+}
+
+/* Beautiful empty state */
+.empty-state-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.empty-state-app svg {
+  width: 60px;
+  height: 60px;
+  opacity: 0.4;
+}
+
 /* ====== MOBILE RESPONSIVE ====== */
 /* Mobile-first approach */
 
-/* Responsive spacing */
+/* Mobile (max-width: 640px) */
 @media (max-width: 640px) {
   body { font-size: 14px; }
   
-  /* Main padding for mobile */
+  /* Adjust main padding to account for bottom nav */
   main, .container {
-    padding: 16px 12px !important;
+    padding: 16px 12px 100px 12px !important;
   }
 
   /* Responsive heading sizes */
@@ -438,27 +630,30 @@
   h2 { font-size: 20px !important; }
   h3 { font-size: 16px !important; }
   
-  /* Button sizes for mobile */
+  /* Button sizes for mobile - Full width but not stacked */
   .btn-primary, .btn-gold, .btn-teal, .btn-secondary {
     padding: 12px 24px !important;
     font-size: 13px !important;
-    width: 100% !important;
+    width: auto !important;
   }
 
   /* Card padding mobile */
-  .card-premium, .card-dark {
-    border-radius: 12px !important;
-    padding: 16px !important;
+  .card-premium, .card-dark, .card-mobile {
+    border-radius: 14px !important;
+    padding: 14px !important;
+    margin-bottom: 8px;
   }
 
-  /* Grid to single column */
+  /* Grid to single column with spacing */
   .grid-cols-2, .grid-cols-3, .grid-cols-4 {
     grid-template-columns: 1fr !important;
+    gap: 12px !important;
   }
 
-  /* Flex direction column on mobile */
+  /* Flex direction column on mobile with good spacing */
   .flex-row-mobile {
     flex-direction: column !important;
+    gap: 12px !important;
   }
 
   /* Hide on mobile */
@@ -475,19 +670,21 @@
   .modal-content, .dialog-content {
     width: 100% !important;
     max-width: 100% !important;
-    border-radius: 12px !important;
+    border-radius: 16px !important;
   }
 
   /* Input fields */
   input, textarea, select {
     font-size: 16px !important; /* Prevent zoom on iOS */
     padding: 12px !important;
+    border-radius: 10px !important;
   }
 
-  /* Reduce gap sizes */
+  /* Reduce gap sizes but maintain visibility */
   .gap-8 { gap: 12px !important; }
   .gap-6 { gap: 10px !important; }
   .gap-4 { gap: 8px !important; }
+  .gap-2 { gap: 4px !important; }
 
   /* Responsive table */
   table {
@@ -495,7 +692,55 @@
   }
 
   table th, table td {
-    padding: 8px 4px !important;
+    padding: 10px 6px !important;
+  }
+
+  /* Section content - not stacked */
+  .section-content {
+    gap: 8px !important;
+  }
+
+  /* Hero buttons - side by side on mobile if possible */
+  .hero-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero-buttons .btn-primary,
+  .hero-buttons .btn-secondary {
+    flex: 1;
+    min-width: 120px;
+  }
+
+  /* Booking cards layout */
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Car cards - responsive */
+  .car-card {
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  /* Status badges - responsive */
+  [class*="badge"] {
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+  }
+
+  /* Beautiful footer - compact */
+  footer {
+    padding: 24px 12px 100px 12px !important;
+  }
+
+  /* Mobile menu smooth transitions */
+  .mobile-menu {
+    animation: slideUp 0.3s ease-out;
   }
 }
 

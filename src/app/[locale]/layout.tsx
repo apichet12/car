@@ -5,6 +5,7 @@ import { Toaster } from 'react-hot-toast'
 import { cookies } from 'next/headers'
 import NavbarWrapper from '@/components/layout/NavbarWrapper'
 import Footer from '@/components/layout/Footer'
+import BottomNav from '@/components/layout/BottomNav'
 import ChatBot from '@/components/chat/ChatBot'
 import { verifyToken } from '@/lib/jwt'
 import type { Metadata } from 'next'
@@ -51,6 +52,7 @@ export default async function LocaleLayout({
       <NextIntlClientProvider messages={messages} locale={locale}>
         <NavbarWrapper user={user} />
         <main className="flex-1 relative z-10" style={{ paddingTop: 70 }}>{children}</main>
+        <BottomNav user={user} />
         <Footer />
         <ChatBot />
         <Toaster
