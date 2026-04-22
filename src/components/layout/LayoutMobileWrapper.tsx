@@ -137,7 +137,8 @@ export default function LayoutMobileWrapper({ children, locale, user }: LayoutMo
                 transition: 'all 0.3s ease',
                 padding: '8px',
                 borderRadius: '8px',
-                marginX: '4px'
+                marginLeft: '4px',
+                marginRight: '4px'
               }}
             >
               <div style={{
