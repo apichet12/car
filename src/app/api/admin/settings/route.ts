@@ -14,7 +14,7 @@ const DEFAULT_SETTINGS = {
   companyPhone: '+66-82-123-4567',
   companyAddress: '123 Patong Rd, Patong Beach, Phuket 83150',
   timezone: 'Asia/Bangkok',
-  logo: '/uploads/logos/logo_1713619200.png',
+  logo: '/uploads/logos/logo_1776805199235.jpg',
   smtpServer: 'smtp.gmail.com',
   smtpPort: '587',
   senderEmail: 'noreply@cattycar.co.th',
@@ -24,6 +24,26 @@ const DEFAULT_SETTINGS = {
   enabledBooking: true,
 }
 
+// ✅ [ADD] mask sensitive data
+function sanitizeSettings(settings: any) {
+  const { senderPassword, apiKey, ...safe } = settings
+  return {
+    ...safe,
+    senderPassword: '••••••••',
+    apiKey: '••••••••',
+  }
+}
+
+// ✅ [ADD] validate input
+function validateSettings(data: any) {
+  if (!data) return false
+
+  if (data.companyEmail && !data.companyEmail.includes('@')) return false
+  if (data.smtpPort && isNaN(Number(data.smtpPort))) return false
+
+  return true
+}
+
 // Read settings from file
 async function readSettings() {
   try {
@@ -31,7 +51,6 @@ async function readSettings() {
     const data = await fs.readFile(filePath, 'utf-8')
     return JSON.parse(data)
   } catch {
-    // File doesn't exist or is invalid, return defaults
     return DEFAULT_SETTINGS
   }
 }
@@ -41,12 +60,14 @@ async function writeSettings(settings: any) {
   try {
     const filePath = getSettingsPath()
     const dir = path.dirname(filePath)
-    
-    // Create directory if it doesn't exist
+
     await fs.mkdir(dir, { recursive: true })
-    
-    // Write file
-    await fs.writeFile(filePath, JSON.stringify(settings, null, 2))
+
+    // ✅ [FIX] atomic write (กันไฟล์พัง)
+    const tempPath = filePath + '.tmp'
+    await fs.writeFile(tempPath, JSON.stringify(settings, null, 2))
+    await fs.rename(tempPath, filePath)
+
     return true
   } catch (error) {
     console.error('Failed to write settings:', error)
@@ -54,34 +75,47 @@ async function writeSettings(settings: any) {
   }
 }
 
+// GET settings
 export async function GET() {
   try {
     const settings = await readSettings()
-    return NextResponse.json(settings)
+
+    // ✅ [FIX] hide sensitive data
+    return NextResponse.json(sanitizeSettings(settings))
+
   } catch (error) {
     console.error('Failed to fetch settings:', error)
     return NextResponse.json({ error: 'Failed to fetch settings' }, { status: 500 })
   }
 }
 
+// POST update settings
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json()
-    
-    // Read existing settings
+
+    // ✅ [ADD] validation
+    if (!validateSettings(data)) {
+      return NextResponse.json({ error: 'Invalid data' }, { status: 400 })
+    }
+
     const existingSettings = await readSettings()
-    
-    // Merge with new data
-    const updatedSettings = { ...existingSettings, ...data }
-    
-    // Write to file
+
+    // ✅ [FIX] protect secret fields
+    const updatedSettings = {
+      ...existingSettings,
+      ...data,
+      senderPassword: data.senderPassword || existingSettings.senderPassword,
+      apiKey: data.apiKey || existingSettings.apiKey,
+    }
+
     const success = await writeSettings(updatedSettings)
-    
+
     if (success) {
-      return NextResponse.json({ 
-        success: true, 
+      return NextResponse.json({
+        success: true,
         message: 'Settings saved successfully',
-        settings: updatedSettings 
+        settings: sanitizeSettings(updatedSettings), // ✅ safe response
       })
     } else {
       return NextResponse.json({ error: 'Failed to save settings' }, { status: 500 })
@@ -91,4 +125,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Failed to save settings' }, { status: 500 })
   }
 }
-

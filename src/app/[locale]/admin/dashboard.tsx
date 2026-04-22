@@ -1,7 +1,8 @@
-﻿'use client'
+'use client'
 import { useState, useEffect } from 'react'
 import { useLocale } from 'next-intl'
-import { BarChart3, Users, Car, AlertCircle, TrendingUp } from 'lucide-react'
+import Link from 'next/link'
+import { BarChart3, Users, Car, AlertCircle, Settings, TrendingUp } from 'lucide-react'
 
 interface DashboardStats {
   totalUsers: number
@@ -85,7 +86,40 @@ export default function AdminDashboard() {
         </p>
       </div>
 
-
+      {/* Navigation */}
+      <div style={{ marginBottom: 32, display: 'flex', gap: 12 }}>
+        <Link href={`/${locale}/admin`} style={{
+          background: 'rgba(212,175,55,0.15)',
+          color: '#D4AF37',
+          padding: '10px 18px',
+          borderRadius: 10,
+          textDecoration: 'none',
+          fontFamily: 'Kanit',
+          fontSize: 13,
+          fontWeight: 700,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 8
+        }}>
+          <BarChart3 size={16} /> {th ? 'แดชบอร์ด' : 'Dashboard'}
+        </Link>
+        <Link href={`/${locale}/admin/settings`} style={{
+          background: 'transparent',
+          color: '#CBD5E1',
+          padding: '10px 18px',
+          borderRadius: 10,
+          textDecoration: 'none',
+          fontFamily: 'Kanit',
+          fontSize: 13,
+          fontWeight: 700,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 8,
+          border: '1px solid rgba(255,255,255,0.1)'
+        }}>
+          <Settings size={16} /> {th ? 'ตั้งค่าระบบ' : 'Settings'}
+        </Link>
+      </div>
 
       {/* Stats Grid */}
       <div style={{

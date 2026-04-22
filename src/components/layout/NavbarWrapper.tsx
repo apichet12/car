@@ -7,7 +7,7 @@ interface NavbarWrapperProps {
 }
 
 export default function NavbarWrapper({ user }: NavbarWrapperProps) {
-  const [logoUrl, setLogoUrl] = useState<string>('/logo.png')
+  const [logoUrl, setLogoUrl] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchLogo = async () => {
@@ -24,5 +24,5 @@ export default function NavbarWrapper({ user }: NavbarWrapperProps) {
     fetchLogo()
   }, [])
 
-  return <Navbar user={user} logoUrl={logoUrl} />
+  return <Navbar user={user} logoUrl={logoUrl || undefined} />
 }

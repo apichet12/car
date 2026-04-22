@@ -79,7 +79,7 @@ export default async function AdminLayout({
           <div style={{ fontSize: 9, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: 2, padding: '14px 10px 6px', marginTop: 8, borderTop: '1px solid rgba(255,255,255,0.04)' }}>
             {locale === 'th' ? 'ตั้งค่า' : 'SETTINGS'}
           </div>
-          <Link href={`/${locale}/admin`} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', borderRadius: 10, color: '#94A3B8', fontSize: 13, textDecoration: 'none', fontFamily: 'Kanit, sans-serif' }}>
+          <Link href={`/${locale}/admin/settings`} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px', borderRadius: 10, color: '#94A3B8', fontSize: 13, textDecoration: 'none', fontFamily: 'Kanit, sans-serif' }}>
             <Settings size={15} />
             <span>{locale === 'th' ? 'ตั้งค่าระบบ' : 'Settings'}</span>
           </Link>

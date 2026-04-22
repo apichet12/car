@@ -344,13 +344,13 @@ export default function Footer() {
             flexWrap: 'wrap',
           }}>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <span style={{ display: 'inline-block', width: 20, height: 20, background: 'rgba(212, 175, 55, 0.2)', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#D4AF37' }}>✓</span>
+              <span style={{ width: 20, height: 20, background: 'rgba(212, 175, 55, 0.2)', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#D4AF37' }}>✓</span>
               <span style={{ fontSize: 11, color: '#9CA3AF' }}>
                 {locale === 'th' ? 'ปลอดภัยและเชื่อถือได้' : 'Safe & Trusted'}
               </span>
             </div>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-              <span style={{ display: 'inline-block', width: 20, height: 20, background: 'rgba(212, 175, 55, 0.2)', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#D4AF37' }}>🔒</span>
+              <span style={{ width: 20, height: 20, background: 'rgba(212, 175, 55, 0.2)', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#D4AF37' }}>🔒</span>
               <span style={{ fontSize: 11, color: '#9CA3AF' }}>
                 {locale === 'th' ? 'เข้ารหัสแบบ SSL' : 'SSL Encrypted'}
               </span>

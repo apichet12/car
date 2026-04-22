@@ -185,7 +185,6 @@ export default function ReportsPage() {
             style={{
               padding: '10px 20px',
               borderRadius: 12,
-              border: 'none',
               cursor: 'pointer',
               fontFamily: 'Kanit, sans-serif',
               fontSize: 13,
