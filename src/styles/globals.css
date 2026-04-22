@@ -420,3 +420,172 @@
 /* Font utilities */
 .font-playfair { font-family: 'Playfair Display', serif; }
 .font-kanit { font-family: 'Kanit', sans-serif; }
+
+/* ====== MOBILE RESPONSIVE ====== */
+/* Mobile-first approach */
+
+/* Responsive spacing */
+@media (max-width: 640px) {
+  body { font-size: 14px; }
+  
+  /* Main padding for mobile */
+  main, .container {
+    padding: 16px 12px !important;
+  }
+
+  /* Responsive heading sizes */
+  h1 { font-size: 24px !important; }
+  h2 { font-size: 20px !important; }
+  h3 { font-size: 16px !important; }
+  
+  /* Button sizes for mobile */
+  .btn-primary, .btn-gold, .btn-teal, .btn-secondary {
+    padding: 12px 24px !important;
+    font-size: 13px !important;
+    width: 100% !important;
+  }
+
+  /* Card padding mobile */
+  .card-premium, .card-dark {
+    border-radius: 12px !important;
+    padding: 16px !important;
+  }
+
+  /* Grid to single column */
+  .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Flex direction column on mobile */
+  .flex-row-mobile {
+    flex-direction: column !important;
+  }
+
+  /* Hide on mobile */
+  .hidden-mobile {
+    display: none !important;
+  }
+
+  /* Navbar adjustments */
+  nav {
+    padding: 0 3% !important;
+  }
+
+  /* Modal/Dialog adjustments */
+  .modal-content, .dialog-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 12px !important;
+  }
+
+  /* Input fields */
+  input, textarea, select {
+    font-size: 16px !important; /* Prevent zoom on iOS */
+    padding: 12px !important;
+  }
+
+  /* Reduce gap sizes */
+  .gap-8 { gap: 12px !important; }
+  .gap-6 { gap: 10px !important; }
+  .gap-4 { gap: 8px !important; }
+
+  /* Responsive table */
+  table {
+    font-size: 13px !important;
+  }
+
+  table th, table td {
+    padding: 8px 4px !important;
+  }
+}
+
+/* Tablet (640px - 1024px) */
+@media (min-width: 641px) and (max-width: 1024px) {
+  main, .container {
+    padding: 24px 20px !important;
+  }
+
+  .btn-primary, .btn-gold, .btn-teal {
+    padding: 12px 28px !important;
+    font-size: 14px !important;
+  }
+
+  .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  h1 { font-size: 28px !important; }
+  h2 { font-size: 22px !important; }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1025px) {
+  main, .container {
+    padding: 28px 5% !important;
+  }
+}
+
+/* Touch-friendly targets */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase touch target size on mobile */
+  button, a, input[type="button"], input[type="submit"] {
+    min-height: 44px !important;
+    min-width: 44px !important;
+  }
+
+  /* Remove hover effects on touch devices */
+  .btn-primary:hover { transform: none !important; }
+  .btn-gold:hover { transform: none !important; }
+  .card-premium:hover { transform: none !important; }
+  
+  /* Add active state instead */
+  .btn-primary:active { opacity: 0.9; transform: scale(0.98); }
+  .btn-gold:active { opacity: 0.9; transform: scale(0.98); }
+}
+
+/* Landscape orientation - iPhone/mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+  body { font-size: 13px; }
+  main { padding: 12px !important; }
+  
+  h1 { font-size: 18px !important; }
+  h2 { font-size: 15px !important; }
+  
+  .btn-primary, .btn-gold {
+    padding: 8px 16px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Extra small devices (max 320px - iPhone SE) */
+@media (max-width: 320px) {
+  body { font-size: 12px; }
+  
+  h1 { font-size: 18px !important; }
+  h2 { font-size: 16px !important; }
+  
+  .btn-primary, .btn-gold {
+    padding: 10px 16px !important;
+    font-size: 12px !important;
+  }
+
+  main { padding: 12px 8px !important; }
+}
+
+/* Large devices (1440px+) */
+@media (min-width: 1440px) {
+  main, .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 5% !important;
+  }
+}
+
+/* Accessibility - reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

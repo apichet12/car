@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -62,7 +62,6 @@ model Booking {
   totalPrice    Float
 
   status        String   @default("PENDING")
-  // PENDING / CONFIRMED / CANCELLED / COMPLETED
 
   paymentProof  String?
   notes         String?
