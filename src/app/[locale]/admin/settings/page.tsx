@@ -524,9 +524,6 @@ export default function AdminSettings() {
     </div>
   )
 }
-
-      {/* Header */}
-      <div style={{ marginBottom: 32 }}>
         <h1 style={{ fontFamily: '"Playfair Display",serif', fontSize: 28, fontWeight: 700, color: '#fff', display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
           <Settings size={32} /> {th ? 'ตั้งค่าระบบ' : 'System Settings'}
         </h1>
