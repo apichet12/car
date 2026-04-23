@@ -69,3 +69,31 @@ model Booking {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
+
+model Settings {
+  id                Int     @id @default(autoincrement())
+  
+  // General settings
+  companyName       String  @default("CATTY CAR RENTAL PHUKET")
+  companyEmail      String  @default("support@cattycar.co.th")
+  companyPhone      String  @default("0958192507")
+  companyAddress    String  @default("123 Patong Rd, Patong Beach, Phuket 83150")
+  timezone          String  @default("Asia/Bangkok")
+  logo              String  @default("/uploads/logos/logo.png")
+
+  // Email SMTP settings
+  smtpServer        String  @default("smtp.gmail.com")
+  smtpPort          Int     @default(587)
+  senderEmail       String  @default("noreply@cattycar.co.th")
+  senderPassword    String  @default("")
+
+  // API keys
+  apiKey            String  @default("")
+  
+  // Feature flags
+  enabledPayments   Boolean @default(true)
+  enabledBooking    Boolean @default(true)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
