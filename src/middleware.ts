@@ -1,4 +1,4 @@
-// 🔧 FIX: เรียก intl ก่อนทุกอย่าง
+// 🔧 FIX: เรียก intl ก่อน + แก้ matcher + กัน locale undefined
 
 import createMiddleware from 'next-intl/middleware'
 import { NextRequest, NextResponse } from 'next/server'
@@ -12,18 +12,27 @@ const intl = createMiddleware({
 })
 
 export async function middleware(req: NextRequest) {
-  // ✅ เรียก intl ก่อน
+  // ✅ FIX: เรียก intl ก่อนเสมอ
   const response = intl(req)
 
   const { pathname } = req.nextUrl
+
+  // 🔧 FIX: กัน locale undefined แบบชัวร์
   const locale =
-    locales.find(l => pathname.startsWith(`/${l}/`) || pathname === `/${l}`) ||
+    locales.find(l => pathname === `/${l}` || pathname.startsWith(`/${l}/`)) ??
     defaultLocale
 
   const path = pathname.replace(`/${locale}`, '') || '/'
 
   const token = req.cookies.get('token')?.value
-  const user = token ? getTokenPayload(token) : null
+  let user = null
+
+  // 🔧 FIX: กัน jwt พัง
+  try {
+    user = token ? getTokenPayload(token) : null
+  } catch (err) {
+    console.error('JWT ERROR:', err)
+  }
 
   // 🔐 auth redirect
   if (path === '/auth/login' || path === '/auth/register') {
@@ -35,8 +44,12 @@ export async function middleware(req: NextRequest) {
 
   // 🔐 admin guard
   if (path.startsWith('/admin')) {
-    if (!user) return NextResponse.redirect(new URL(`/${locale}/auth/login`, req.url))
-    if (user.role !== 'ADMIN') return NextResponse.redirect(new URL(`/${locale}`, req.url))
+    if (!user) {
+      return NextResponse.redirect(new URL(`/${locale}/auth/login`, req.url))
+    }
+    if (user.role !== 'ADMIN') {
+      return NextResponse.redirect(new URL(`/${locale}`, req.url))
+    }
   }
 
   // 🔐 user guard
@@ -48,7 +61,9 @@ export async function middleware(req: NextRequest) {
     }
   }
 
+  // ✅ return response จาก intl
   return response
 }
-
-export const config = { matcher: ['/((?!api|_next|_vercel|.*\\..*).*)', '/'] }
+export const config = {
+  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)']
+}
