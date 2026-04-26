@@ -1,8 +1,10 @@
+// 🔧 FIX: ห้าม import จาก public + กัน locale undefined + กัน crash
+
 import { getRequestConfig } from 'next-intl/server'
 
-// Import messages directly (more reliable than dynamic imports in production)
-import thMessages from '../../public/locales/th/common.json'
-import enMessages from '../../public/locales/en/common.json'
+// ✅ ย้ายไฟล์มา src/messages ก่อน
+import thMessages from '@/messages/th.json'
+import enMessages from '@/messages/en.json'
 
 const messages: Record<string, any> = {
   th: thMessages,
@@ -11,17 +13,19 @@ const messages: Record<string, any> = {
 
 export default getRequestConfig(async ({ locale }) => {
   try {
-    if (!locale || !messages[locale]) {
-      console.error(`Locale "${locale}" not found or invalid`)
-      throw new Error(`Unsupported locale: ${locale}`)
-    }
+    const safeLocale = locale && messages[locale] ? locale : 'th' // ✅ กัน undefined
 
     return {
-      locale,
-      messages: messages[locale]
+      locale: safeLocale,
+      messages: messages[safeLocale]
     }
   } catch (error) {
     console.error('i18n config error:', error)
-    throw error
+
+    // ✅ fallback กันเว็บล่ม
+    return {
+      locale: 'th',
+      messages: thMessages
+    }
   }
 })
