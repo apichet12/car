@@ -1,3 +1,5 @@
+// 🔧 FIX: เพิ่ม debug + กัน Prisma error + ไม่ให้ 500 เงียบ
+
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import prisma from '@/lib/prisma'
@@ -48,8 +50,23 @@ export async function POST(req: NextRequest) {
       }
     })
 
-  } catch (err) {
-    console.error("REGISTER ERROR:", err)
-    return NextResponse.json({ error: 'Server error' }, { status: 500 })
+  } catch (err: any) {
+    // 🔥 DEBUG สำคัญ (ดูใน Render logs)
+    console.error("REGISTER ERROR FULL:", err)
+    console.error("REGISTER ERROR MESSAGE:", err?.message)
+
+    // 🔥 Prisma unique constraint
+    if (err?.code === 'P2002') {
+      return NextResponse.json(
+        { error: 'Duplicate field (unique constraint)' },
+        { status: 400 }
+      )
+    }
+
+    // 🔥 fallback error (ส่ง message จริงออกมา)
+    return NextResponse.json(
+      { error: err?.message || 'Server error' },
+      { status: 500 }
+    )
   }
 }
