@@ -20,11 +20,22 @@ const parseImages = (images: any): string[] => {
 export default async function HomePage({ params: { locale } }: { params: { locale: string } }) {
   const th = locale === 'th'
   let cars: any[] = []
+  
+  // Safely attempt to fetch cars from database
   try {
-    cars = await prisma.car.findMany({ where: { isAvailable: true }, take: 4, orderBy: { createdAt: 'desc' } })
-    cars = cars.map((car) => ({ ...car, images: parseImages(car.images) }))
+    if (prisma && typeof prisma.car?.findMany === 'function') {
+      const result = await prisma.car.findMany({ 
+        where: { isAvailable: true }, 
+        take: 4, 
+        orderBy: { createdAt: 'desc' } 
+      })
+      if (Array.isArray(result)) {
+        cars = result.map((car) => ({ ...car, images: parseImages(car.images) }))
+      }
+    }
   } catch (error) {
     console.error('HOME PAGE CAR QUERY ERROR:', error)
+    // Page will still render without cars - this is not a fatal error
   }
 
   const features = [

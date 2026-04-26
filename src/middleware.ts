@@ -48,6 +48,7 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // ✅ สุดท้าย return response จาก intl
   return response
 }
+
+export const config = { matcher: ['/((?!api|_next|_vercel|.*\\..*).*)', '/'] }
