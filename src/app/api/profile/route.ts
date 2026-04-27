@@ -25,11 +25,28 @@ export async function GET(req: NextRequest) {
       }
     })
 
+    if (!user) {
+      return NextResponse.json(
+        { error: 'User not found' },
+        { status: 404 }
+      )
+    }
+
     return NextResponse.json({ user })
   } catch (error) {
     console.error('PROFILE GET ERROR:', error)
+    const errorMsg = error instanceof Error ? error.message : 'Unknown error'
+    
+    // Check if it's a database connection error
+    if (errorMsg.includes('Can\'t reach database') || errorMsg.includes('ECONNREFUSED')) {
+      return NextResponse.json(
+        { error: 'Database connection unavailable. Please try again later.' },
+        { status: 503 }
+      )
+    }
+    
     return NextResponse.json(
-      { error: 'Server error' },
+      { error: 'Failed to fetch profile' },
       { status: 500 }
     )
   }
@@ -106,8 +123,18 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ user: updated })
   } catch (error) {
     console.error('PROFILE UPDATE ERROR:', error)
+    const errorMsg = error instanceof Error ? error.message : 'Unknown error'
+    
+    // Check if it's a database connection error
+    if (errorMsg.includes('Can\'t reach database') || errorMsg.includes('ECONNREFUSED')) {
+      return NextResponse.json(
+        { error: 'Database connection unavailable. Please try again later.' },
+        { status: 503 }
+      )
+    }
+    
     return NextResponse.json(
-      { error: 'Server error' },
+      { error: 'Failed to update profile' },
       { status: 500 }
     )
   }

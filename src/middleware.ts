@@ -1,4 +1,3 @@
-// 🔧 FIX: เรียก intl ก่อน + แก้ matcher + กัน locale undefined
 
 import createMiddleware from 'next-intl/middleware'
 import { NextRequest, NextResponse } from 'next/server'
@@ -12,12 +11,10 @@ const intl = createMiddleware({
 })
 
 export async function middleware(req: NextRequest) {
-  // ✅ FIX: เรียก intl ก่อนเสมอ
   const response = intl(req)
 
   const { pathname } = req.nextUrl
 
-  // 🔧 FIX: กัน locale undefined แบบชัวร์
   const locale =
     locales.find(l => pathname === `/${l}` || pathname.startsWith(`/${l}/`)) ??
     defaultLocale
@@ -27,14 +24,14 @@ export async function middleware(req: NextRequest) {
   const token = req.cookies.get('token')?.value
   let user = null
 
-  // 🔧 FIX: กัน jwt พัง
+  //  FIX: กัน jwt พัง
   try {
     user = token ? getTokenPayload(token) : null
   } catch (err) {
     console.error('JWT ERROR:', err)
   }
 
-  // 🔐 auth redirect
+  //  auth redirect
   if (path === '/auth/login' || path === '/auth/register') {
     if (user) {
       const dest = user.role === 'ADMIN' ? `/${locale}/admin` : `/${locale}`
@@ -42,7 +39,7 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // 🔐 admin guard
+  // admin guard
   if (path.startsWith('/admin')) {
     if (!user) {
       return NextResponse.redirect(new URL(`/${locale}/auth/login`, req.url))
@@ -52,7 +49,7 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // 🔐 user guard
+  //  user guard
   if (path.startsWith('/profile') || path.startsWith('/booking')) {
     if (!user) {
       const url = new URL(`/${locale}/auth/login`, req.url)
@@ -61,7 +58,7 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // ✅ return response จาก intl
+  //  return response จาก intl
   return response
 }
 export const config = {

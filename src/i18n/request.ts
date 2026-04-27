@@ -2,7 +2,6 @@
 
 import { getRequestConfig } from 'next-intl/server'
 
-// ✅ ย้ายไฟล์มา src/messages ก่อน
 import thMessages from '@/messages/th.json'
 import enMessages from '@/messages/en.json'
 
@@ -22,7 +21,6 @@ export default getRequestConfig(async ({ locale }) => {
   } catch (error) {
     console.error('i18n config error:', error)
 
-    // ✅ fallback กันเว็บล่ม
     return {
       locale: 'th',
       messages: thMessages
